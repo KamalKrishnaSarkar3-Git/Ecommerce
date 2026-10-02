@@ -1,0 +1,149 @@
+{% extends 'marketplace/base.html' %}
+{% block content %}
+
+<!-- Hero -->
+<section class="hero text-white py-5">
+  <div class="container py-4">
+    <div class="row align-items-center">
+      <div class="col-lg-7">
+        <h1 class="display-4 fw-bold">Fresh From The Farm 🌱</h1>
+        <p class="lead mb-4">Buy directly from local farmers — no middlemen, no markup, just honest produce.</p>
+        <a href="{% url 'product_list' %}" class="btn btn-warning btn-lg px-4 me-2">Shop Now</a>
+        <a href="{% url 'signup' %}" class="btn btn-outline-light btn-lg px-4">Become a Farmer</a>
+      </div>
+      <div class="col-lg-5 text-center d-none d-lg-block">
+        <i class="bi bi-basket2-fill" style="font-size:12rem;opacity:0.3;"></i>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Trust badges -->
+<div class="bg-light py-3 border-bottom">
+  <div class="container">
+    <div class="row text-center g-2">
+      <div class="col-6 col-md-3"><i class="bi bi-truck text-success fs-4"></i> <small>Free Delivery Above ₹500</small></div>
+      <div class="col-6 col-md-3"><i class="bi bi-shield-check text-success fs-4"></i> <small>100% Fresh Guarantee</small></div>
+      <div class="col-6 col-md-3"><i class="bi bi-cash-coin text-success fs-4"></i> <small>Cash on Delivery</small></div>
+      <div class="col-6 col-md-3"><i class="bi bi-person-check text-success fs-4"></i> <small>Direct from Farmers</small></div>
+    </div>
+  </div>
+</div>
+
+<!-- Categories -->
+<div class="container my-5">
+  <h2 class="mb-4 text-center">Shop by Category</h2>
+  <div class="row g-3">
+    {% for cat in categories %}
+    <div class="col-6 col-md-3">
+      <a href="{% url 'product_list' %}?category={{ cat.slug }}" class="text-decoration-none">
+        <div class="card text-center h-100 shadow-sm category-card">
+          <div class="card-body">
+            <i class="bi bi-{{ cat.icon }} fs-1 text-success"></i>
+            <h6 class="mt-2 text-dark">{{ cat.name }}</h6>
+            <small class="text-muted">{{ cat.description|truncatechars:40 }}</small>
+          </div>
+        </div>
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- Featured Products -->
+<div class="container mb-5">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>⭐ Featured Products</h2>
+    <a href="{% url 'product_list' %}" class="btn btn-outline-success">View All</a>
+  </div>
+  <div class="row g-4">
+    {% for product in featured %}
+      {% include 'marketplace/_product_card.html' with product=product %}
+    {% empty %}
+      <p class="text-muted">No products yet.</p>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- Organic Picks -->
+{% if organic %}
+<div class="bg-light py-5">
+  <div class="container">
+    <h2 class="mb-4">🌿 Organic Picks</h2>
+    <div class="row g-4">
+      {% for product in organic %}
+        {% include 'marketplace/_product_card.html' with product=product %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<!-- Top Farmers -->
+{% if top_farmers %}
+<div class="container my-5">
+  <h2 class="mb-4">👨‍🌾 Meet Our Top Farmers</h2>
+  <div class="row g-4">
+    {% for farmer in top_farmers %}
+    <div class="col-md-6 col-lg-3">
+      <div class="card h-100 shadow-sm text-center">
+        <div class="card-body">
+          <i class="bi bi-person-circle fs-1 text-success"></i>
+          <h6 class="mt-2">{{ farmer.farm_name }}</h6>
+          <p class="text-muted small mb-1"><i class="bi bi-geo-alt"></i> {{ farmer.location }}, {{ farmer.state }}</p>
+          <span class="badge bg-warning text-dark">★ {{ farmer.rating }}</span>
+          {% if farmer.is_verified %}
+          <span class="badge bg-success">✓ Verified</span>
+          {% endif %}
+          <p class="small text-muted mt-2">{{ farmer.bio|truncatechars:80 }}</p>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+<!-- New Arrivals -->
+{% if new_arrivals %}
+<div class="container mb-5">
+  <h2 class="mb-4">🆕 New Arrivals</h2>
+  <div class="row g-4">
+    {% for product in new_arrivals %}
+      {% include 'marketplace/_product_card.html' with product=product %}
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+<!-- Testimonials -->
+<div class="bg-success text-white py-5">
+  <div class="container text-center">
+    <h2 class="mb-4">What Customers Say</h2>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="p-3">
+          <i class="bi bi-quote fs-1"></i>
+          <p>"The Alphonso mangoes were absolutely divine — better than any store-bought ones!"</p>
+          <strong>— Priya S., Mumbai</strong>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="p-3">
+          <i class="bi bi-quote fs-1"></i>
+          <p>"Fresh A2 milk delivered daily. My family has switched completely to FarmDirect."</p>
+          <strong>— Arjun M., Bangalore</strong>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="p-3">
+          <i class="bi bi-quote fs-1"></i>
+          <p>"Finally a platform where farmers get fair prices. Highly recommend!"</p>
+          <strong>— Neha V., Pune</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

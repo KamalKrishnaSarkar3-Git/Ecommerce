@@ -1,0 +1,29 @@
+body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: #f8f9fa;
+}
+
+.hero {
+    background: linear-gradient(135deg, #198754 0%, #2ea872 100%);
+}
+
+.product-card, .category-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: none;
+}
+
+.product-card:hover, .category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+.btn-success { background-color: #198754; }
+
+footer { font-size: 0.9rem; }
+
+input, select, textarea {
+    border-radius: 6px !important;
+    border: 1px solid #ced4da;
+    padding: 8px 12px;
+    width: 100%;
+}

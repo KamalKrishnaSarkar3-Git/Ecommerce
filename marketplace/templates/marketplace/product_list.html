@@ -1,0 +1,44 @@
+{% extends 'marketplace/base.html' %}
+{% block content %}
+<div class="container my-4">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="card shadow-sm mb-3">
+        <div class="card-header bg-success text-white">Filters</div>
+        <div class="card-body">
+          <form method="get">
+            <div class="mb-3">
+              <label class="form-label">Search</label>
+              <input type="text" name="q" value="{{ q }}" class="form-control" placeholder="Search...">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Category</label>
+              <select name="category" class="form-select">
+                <option value="">All</option>
+                {% for cat in categories %}
+                <option value="{{ cat.slug }}" {% if selected_cat == cat.slug %}selected{% endif %}>{{ cat.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="form-check mb-3">
+              <input class="form-check-input" type="checkbox" name="organic" value="1" id="organicChk">
+              <label class="form-check-label" for="organicChk">Organic only</label>
+            </div>
+            <button class="btn btn-success w-100">Apply</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <h3 class="mb-3">Fresh Produce ({{ products.count }})</h3>
+      <div class="row g-4">
+        {% for product in products %}
+          {% include 'marketplace/_product_card.html' with product=product %}
+        {% empty %}
+          <div class="col-12"><div class="alert alert-info">No products found.</div></div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

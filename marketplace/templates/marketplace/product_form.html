@@ -1,0 +1,22 @@
+{% extends 'marketplace/base.html' %}
+{% block content %}
+<div class="container my-5" style="max-width:700px;">
+  <h2>{{ title }}</h2>
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="mb-3">
+          <label class="form-label">{{ field.label }}</label>
+          {{ field }}
+          {% if field.help_text %}<small class="text-muted">{{ field.help_text }}</small>{% endif %}
+        </div>
+        {% endfor %}
+        <button class="btn btn-success">Save</button>
+        <a href="{% url 'seller_dashboard' %}" class="btn btn-outline-secondary">Cancel</a>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

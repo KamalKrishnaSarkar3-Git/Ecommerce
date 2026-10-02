@@ -1,0 +1,26 @@
+{% extends 'marketplace/base.html' %}
+{% block content %}
+<div class="container my-5">
+  <h2>My Orders</h2>
+  {% for order in orders %}
+  <div class="card mb-3 shadow-sm">
+    <div class="card-header d-flex justify-content-between">
+      <span>Order #{{ order.id }} — {{ order.created_at|date:"M d, Y" }}</span>
+      <span class="badge bg-{% if order.status == 'delivered' %}success{% elif order.status == 'cancelled' %}danger{% else %}warning{% endif %}">
+        {{ order.get_status_display }}
+      </span>
+    </div>
+    <div class="card-body">
+      <ul class="list-unstyled mb-2">
+        {% for item in order.items.all %}
+        <li>{{ item.product_name }} × {{ item.quantity }} — ₹{{ item.subtotal }}</li>
+        {% endfor %}
+      </ul>
+      <strong>Total: ₹{{ order.total_amount }}</strong>
+    </div>
+  </div>
+  {% empty %}
+  <div class="alert alert-info">No orders yet.</div>
+  {% endfor %}
+</div>
+{% endblock %}
