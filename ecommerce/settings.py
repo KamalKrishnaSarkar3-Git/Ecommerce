@@ -26,7 +26,9 @@ SECRET_KEY = 'django-insecure-rg9ds3vm=lm66ty-jav9*hg4!s)qcibonr4a7w9jfbvz0_ik6y
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.vercel.app', ]
+ALLOWED_HOSTS = ['.vercel.app', '.up.railway.app', '.railway.app', 'localhost', '127.0.0.1']
+
+CSRF_TRUSTED_ORIGINS = ['https://*.up.railway.app', 'https://*.railway.app']
 
 
 # Application definition
